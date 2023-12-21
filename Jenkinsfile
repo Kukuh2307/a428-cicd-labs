@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm install'
+                sh 'npm install > npm_install.log 2>&1'
             }
         }
         stage('Test') { 
