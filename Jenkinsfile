@@ -19,13 +19,7 @@ pipeline {
         }
         stage('Manual Approval') {
             steps {
-                script {
-                    def userInput = input message: 'Lanjutkan ke tahap Deploy?', 
-                    parameters: [choice(choices: ['Proceed', 'Abort'], description: 'Pilih salah satu', name: 'userChoice')]
-                    if (userInput == 'Abort') {
-                        error('Eksekusi pipeline dihentikan.')
-                    }
-                }
+                input message : "lanjutkan ke tahap Deploy?"
             }
         }
         stage('Deploy') {
