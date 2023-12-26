@@ -5,35 +5,27 @@ pipeline {
             args '-p 3000:3000'
         }
     }
-
     stages {
         stage('Build') {
             steps {
                 sh 'npm install'
             }
         }
-        stage('Test') { 
+        stage('Test') {
             steps {
-                sh './jenkins/scripts/test.sh' 
+                sh './jenkins/scripts/test.sh'
             }
         }
         stage('Manual Approval') {
             steps {
-                input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed'
+                input message: 'Lanjutkan ke tahap Deploy?'
             }
         }
-        stage('Deploy') {
+        stage('Deploy') { 
             steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
-    }
-    post {
-        always {
-            script {
-                // Menjeda eksekusi selama 1 menit (60 detik)
-                sleep(time: 60, unit: 'SECONDS')
-                sh './jenkins/scripts/kill.sh'
+                sh './jenkins/scripts/deliver.sh' 
+                sh 'sleep 60'
+                sh './jenkins/scripts/kill.sh' 
             }
         }
     }
